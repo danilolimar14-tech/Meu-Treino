@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#167a52">
+<meta name="description" content="Acompanhe seus treinos, cargas e evolução semanal.">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Meu Treino</title>
+<style>
+:root{--green:#167a52;--green2:#e5f4ec;--ink:#18231e;--muted:#6b7770;--line:#e5eae7;--bg:#f5f8f6;--white:#fff;--orange:#e99a35}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px system-ui,-apple-system,Segoe UI,sans-serif}button,input{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;min-height:100vh;padding-bottom:92px}.top{background:var(--green);color:white;padding:24px 20px 28px;border-radius:0 0 24px 24px}.topline{display:flex;justify-content:space-between;align-items:center}.brand{font-size:14px;opacity:.9;letter-spacing:.08em;font-weight:700}.top h1{font-size:27px;margin:15px 0 4px}.top p{margin:0;opacity:.85}.week{display:flex;gap:7px;margin-top:22px;overflow:auto}.day{flex:1;min-width:42px;border:1px solid #ffffff55;background:#ffffff16;color:white;border-radius:13px;padding:9px 4px;text-align:center}.day b{display:block;font-size:12px}.day span{font-size:15px}.day.active{background:white;color:var(--green);border-color:white}.day.done{outline:2px solid #b8e5ca}.content{padding:18px}.date-line{display:flex;justify-content:space-between;align-items:center;margin:2px 0 14px}.date-line h2{font-size:21px;margin:0}.muted{color:var(--muted);font-size:13px}.progress-card,.card{background:white;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}.progress-head{display:flex;justify-content:space-between;gap:12px;font-weight:650}.track{height:9px;background:#edf1ee;border-radius:20px;overflow:hidden;margin-top:11px}.fill{height:100%;background:var(--green);width:0;transition:width .2s}.section-title{font-size:15px;font-weight:750;margin:20px 2px 10px}.exercise{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:1px solid var(--line)}.exercise:last-child{border:0}.check{width:23px;height:23px;accent-color:var(--green);flex:none;margin-top:2px}.ex-main{flex:1;min-width:0}.ex-name{font-weight:650}.ex-meta{font-size:13px;color:var(--muted);margin-top:3px}.load{display:flex;align-items:center;gap:6px;margin-top:8px}.load input{width:82px;padding:7px 8px;border:1px solid var(--line);border-radius:9px;background:#fbfcfb}.load small{color:var(--muted)}.pill{display:inline-block;background:var(--green2);color:var(--green);padding:5px 9px;border-radius:20px;font-size:12px;font-weight:700}.rest{text-align:center;padding:25px 10px}.rest .emoji{font-size:42px}.rest h3{margin:8px 0}.actions{display:flex;gap:9px;margin-top:15px}.btn{border:0;border-radius:12px;padding:12px 15px;font-weight:700}.primary{background:var(--green);color:white;flex:1}.secondary{background:var(--green2);color:var(--green)}.bottom{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;border-top:1px solid var(--line);display:flex;justify-content:center;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));backdrop-filter:blur(12px)}.bottom button{background:transparent;border:0;color:var(--muted);padding:8px 16px;border-radius:12px;font-weight:650}.bottom button.active{background:var(--green2);color:var(--green)}.hidden{display:none}.statgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.stat{background:#f7faf8;border-radius:13px;padding:13px}.stat strong{display:block;font-size:23px;color:var(--green)}.history-row{padding:12px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px}.toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%);background:#17251e;color:white;padding:10px 16px;border-radius:30px;font-size:13px;display:none}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+ <div class="topline"><div class="brand">PROJETO DEFINIÇÃO</div><span class="pill" style="background:#ffffff22;color:white">TREINO</span></div>
+ <h1>Meu Treino</h1><p>Consistência hoje. Evolução sempre.</p>
+ <div class="week" id="week"></div>
+</header>
+<main class="content">
+ <section id="treinoView">
+  <div class="date-line"><div><div class="muted" id="fullDate"></div><h2 id="dayTitle"></h2></div><span class="pill" id="dayTag"></span></div>
+  <div class="progress-card"><div class="progress-head"><span>Progresso do treino</span><span id="progressText">0%</span></div><div class="track"><div class="fill" id="progressFill"></div></div><div class="muted" id="progressSub" style="margin-top:8px">Marque os exercícios conforme concluir.</div></div>
+  <div id="exerciseArea"></div>
+  <div class="card" id="cardioCard"><div class="progress-head"><span>🚴 Cardio — bicicleta</span><span class="muted">Meta: 20 min</span></div><div class="load"><input id="cardioMinutes" type="number" min="0" max="180" inputmode="numeric" placeholder="Minutos"><small>minutos realizados</small></div></div>
+  <div class="actions"><button class="btn secondary" id="resetBtn">Limpar dia</button><button class="btn primary" id="saveBtn">Salvar treino</button></div>
+ </section>
+ <section id="historyView" class="hidden">
+  <div class="date-line"><div><div class="muted">SEU DESEMPENHO</div><h2>Minha evolução</h2></div></div>
+  <div class="card"><div class="statgrid"><div class="stat"><strong id="weekDone">0/6</strong><span class="muted">dias de força feitos</span></div><div class="stat"><strong id="totalDone">0</strong><span class="muted">treinos registrados</span></div></div></div>
+  <div class="section-title">Histórico recente</div><div class="card" id="historyList"></div>
+ </section>
+</main>
+<nav class="bottom"><button class="active" id="navToday">Treino</button><button id="navHistory">Evolução</button></nav>
+<div class="toast" id="toast"></div>
+</div>
+<script>
+const plan=[
+ {name:'Peito e tríceps',tag:'FORÇA',groups:[['Peito',[['Supino reto com halteres','4 × 8–12'],['Supino inclinado com halteres','4 × 8–12'],['Crucifixo com halteres','3 × 10–12'],['Flexão de braço','3 × máximo controlado']]],['Tríceps',[['Tríceps na polia','4 × 10–12'],['Tríceps testa com halter','3 × 10–12'],['Tríceps coice','3 × 12'],['Mergulho no banco','3 × 10–12']]]],cardio:true},
+ {name:'Costas e bíceps',tag:'FORÇA',groups:[['Costas',[['Puxada alta na estação','4 × 8–12'],['Remada baixa na estação','4 × 8–12'],['Remada unilateral com halter','3 × 10 cada lado'],['Pullover com halter','3 × 12']]],['Bíceps',[['Rosca direta','4 × 8–12'],['Rosca alternada','3 × 10'],['Rosca martelo','3 × 10–12'],['Rosca concentrada','3 × 12']]]],cardio:true},
+ {name:'Descanso',tag:'RECUPERAÇÃO',groups:[],cardio:false},
+ {name:'Quadríceps',tag:'PERNAS',groups:[['Quadríceps',[['Agachamento com halteres','4 × 10–12'],['Agachamento sumô','3 × 12'],['Cadeira extensora na estação*','3 × 12'],['Afundo curto com apoio','3 × 10 cada perna']]]],cardio:true},
+ {name:'Ombros',tag:'FORÇA',groups:[['Ombros',[['Desenvolvimento com halteres','4 × 8–12'],['Elevação lateral','4 × 12'],['Elevação frontal','3 × 10–12'],['Crucifixo inverso','3 × 12']]]],cardio:true},
+ {name:'Posterior e glúteos',tag:'PERNAS',groups:[['Posterior e glúteos',[['Levantamento terra romeno com halteres','4 × 10'],['Elevação pélvica','4 × 12'],['Flexão de joelhos na estação*','3 × 12'],['Ponte unilateral','3 × 10 cada lado']]]],cardio:true},
+ {name:'Abdômen e core',tag:'CORE',groups:[['Abdômen',[['Prancha','3 × 30–45 s'],['Abdominal curto','3 × 15'],['Elevação de joelhos','3 × 12'],['Bird-dog','3 × 10 cada lado']]]],cardio:false}
+];
+const weekdays=['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];
+let selected=new Date().getDay(), data=JSON.parse(localStorage.getItem('meuTreinoData')||'{}');
+const key=(d)=>{const x=new Date();x.setDate(x.getDate()+(d-x.getDay()));return x.toISOString().slice(0,10)};
+const dateKey=(day)=>{const x=new Date();x.setDate(x.getDate()+(day-x.getDay()));return x.toISOString().slice(0,10)};
+function record(day=selected){return data[dateKey(day)]||{checks:{},loads:{},cardio:''}}
+function save(){localStorage.setItem('meuTreinoData',JSON.stringify(data))}
+function renderWeek(){const el=document.getElementById('week');el.innerHTML='';weekdays.forEach((w,i)=>{const b=document.createElement('button');b.className='day '+(i===selected?'active ':'')+(data[dateKey(i)]?.saved?'done':'');b.innerHTML='<b>'+w+'</b><span>'+new Date(new Date().setDate(new Date().getDate()+i-new Date().getDay())).getDate()+'</span>';b.onclick=()=>{selected=i;render()};el.appendChild(b)})}
+function render(){renderWeek();const p=plan[selected],r=record();document.getElementById('fullDate').textContent=new Date(dateKey(selected)+'T12:00:00').toLocaleDateString('pt-BR',{day:'numeric',month:'long'});document.getElementById('dayTitle').textContent=p.name;document.getElementById('dayTag').textContent=p.tag;document.getElementById('cardioCard').classList.toggle('hidden',!p.cardio);document.getElementById('cardioMinutes').value=r.cardio||'';const area=document.getElementById('exerciseArea');area.innerHTML='';if(!p.groups.length){area.innerHTML='<div class="card rest"><div class="emoji">🌿</div><h3>Dia de recuperação</h3><p class="muted">Descanse, hidrate-se e permita que seus músculos se recuperem.</p></div>'}else p.groups.forEach(([group,items])=>{const title=document.createElement('div');title.className='section-title';title.textContent=group;area.appendChild(title);const card=document.createElement('div');card.className='card';items.forEach(([name,meta],i)=>{const id=group+'-'+i,row=document.createElement('div');row.className='exercise';const check=document.createElement('input');check.type='checkbox';check.className='check';check.checked=!!r.checks[id];check.onchange=()=>{const q=record();q.checks[id]=check.checked;data[dateKey(selected)]=q;save();updateProgress()};const main=document.createElement('div');main.className='ex-main';main.innerHTML='<div class="ex-name"></div><div class="ex-meta">'+meta+'</div><div class="load"><input type="text" inputmode="decimal" placeholder="Carga (kg)" value="'+(r.loads[id]||'')+'"><small>kg</small></div>';main.querySelector('.ex-name').textContent=name;const input=main.querySelector('input');input.onchange=()=>{const q=record();q.loads[id]=input.value;data[dateKey(selected)]=q;save()};row.append(check,main);card.appendChild(row)});area.appendChild(card)});updateProgress()}
+function updateProgress(){const p=plan[selected],r=record(),total=p.groups.reduce((n,g)=>n+g[1].length,0),done=Object.values(r.checks).filter(Boolean).length,pct=total?Math.round(done/total*100):0;document.getElementById('progressText').textContent=pct+'%';document.getElementById('progressFill').style.width=pct+'%';document.getElementById('progressSub').textContent=total?done+' de '+total+' exercícios concluídos': 'Dia reservado para recuperação.'}
+function toast(s){const t=document.getElementById('toast');t.textContent=s;t.style.display='block';setTimeout(()=>t.style.display='none',1800)}
+document.getElementById('cardioMinutes').onchange=e=>{const r=record();r.cardio=e.target.value;data[dateKey(selected)]=r;save()};
+document.getElementById('saveBtn').onclick=()=>{const r=record();r.saved=true;r.cardio=document.getElementById('cardioMinutes').value;data[dateKey(selected)]=r;save();renderWeek();toast('Treino salvo!')};
+document.getElementById('resetBtn').onclick=()=>{if(confirm('Limpar as marcações e cargas deste dia?')){delete data[dateKey(selected)];save();render();toast('Dia limpo')}};
+document.getElementById('navToday').onclick=()=>{document.getElementById('treinoView').classList.remove('hidden');document.getElementById('historyView').classList.add('hidden');document.getElementById('navToday').classList.add('active');document.getElementById('navHistory').classList.remove('active')};
+document.getElementById('navHistory').onclick=()=>{document.getElementById('treinoView').classList.add('hidden');document.getElementById('historyView').classList.remove('hidden');document.getElementById('navHistory').classList.add('active');document.getElementById('navToday').classList.remove('active');const vals=Object.values(data),done=vals.filter(x=>x.saved).length;document.getElementById('totalDone').textContent=done;document.getElementById('weekDone').textContent=vals.filter(x=>x.saved).length+'/6';const list=document.getElementById('historyList');list.innerHTML='';Object.keys(data).sort().reverse().slice(0,12).forEach(k=>{const el=document.createElement('div');el.className='history-row';const d=new Date(k+'T12:00:00').toLocaleDateString('pt-BR');el.innerHTML='<span>'+d+'</span><span class="muted">'+(data[k].saved?'Salvo':'Em andamento')+' · '+(data[k].cardio||0)+' min bike</span>';list.appendChild(el)});if(!list.children.length)list.textContent='Seus treinos registrados aparecerão aqui.'};
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
