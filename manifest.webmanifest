@@ -1,0 +1,19 @@
+{
+  "name": "Meu Treino",
+  "short_name": "Meu Treino",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f8f6",
+  "theme_color": "#167a52",
+  "lang": "pt-BR",
+  "description": "Acompanhe seus treinos, cargas e evolução semanal.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
