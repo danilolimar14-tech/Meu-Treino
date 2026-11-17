@@ -44,7 +44,9 @@ const plan=[
  {name:'Descanso',tag:'RECUPERAÇÃO',groups:[],cardio:false}
 ];
 const weekdays=['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];
-let selected=new Date().getDay(), data=JSON.parse(localStorage.getItem('meuTreinoData')||'{}');\nconst cycleAnchor=localStorage.getItem('meuTreinoCycleAnchor')||new Date().toISOString().slice(0,10);localStorage.setItem('meuTreinoCycleAnchor',cycleAnchor);\nfunction cycleIndex(date){const a=new Date(cycleAnchor+'T12:00:00'),b=new Date(date+'T12:00:00');return ((Math.floor((b-a)/86400000)%4)+4)%4}
+let selected=new Date().getDay(), data=JSON.parse(localStorage.getItem('meuTreinoData')||'{}');
+const cycleAnchor=localStorage.getItem('meuTreinoCycleAnchor')||new Date().toISOString().slice(0,10);localStorage.setItem('meuTreinoCycleAnchor',cycleAnchor);
+function cycleIndex(date){const a=new Date(cycleAnchor+'T12:00:00'),b=new Date(date+'T12:00:00');return ((Math.floor((b-a)/86400000)%4)+4)%4}
 const key=(d)=>{const x=new Date();x.setDate(x.getDate()+(d-x.getDay()));return x.toISOString().slice(0,10)};
 const dateKey=(day)=>{const x=new Date();x.setDate(x.getDate()+(day-x.getDay()));return x.toISOString().slice(0,10)};
 function record(day=selected){return data[dateKey(day)]||{checks:{},loads:{},cardio:''}}
